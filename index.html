@@ -1,8 +1,80 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600&display=swap" rel="stylesheet">
+        <style>
+body {
+    font-family: "Heebo", sans-serif;
+    font-size: 20px;
+    background: #fafafa;
+    margin: 64px;
+}
+
+.link, .links {
+    padding-left: 30px;
+}
+
+.links-top {
+    padding-left: 0px;
+}
+
+a {
+    color: #2196F3;
+    text-decoration: none;
+    border-bottom: 2px #2196F3 solid;
+}
+        </style>
     </head>
     <body>
         <h1>Cyber Links</h1>
+        <script>
+
+let links = {
+    "links": [
+        {"title": "General", "links": [
+            {"name": "ועד מדמח", "link": "https://drive.google.com/drive/folders/1FscrR8EJ02xAmTLtW9W6w2S0QQ_N35A_"}
+        ]},
+        {"title": "Year 2", "links": [
+            {"name": "Misha's summaries", "link": "https://summaries.farberbrodsky.com/"},
+            {"name": "Drive", "link": "https://drive.google.com/drive/folders/1bHVwI03IxssI-8EhN0mBAgYPQO_LeXFZ"}
+        ]},
+        {"title": "Awesome Software", "links": [
+            {"name": "Ghidra", "link": "https://epic.cyberwebsite.ml/"},
+            {"name": "Cutter (the coolest reverse engineering software)", "link": "https://cutter.re/"}
+        ]}
+    ]
+};
+
+// render links
+function renderLink(link) {
+    if (link["links"]) {
+        // multiple links to render in one section
+        let result = document.createElement("div");
+        result.className = "links";
+        if (link["title"]) {
+            let title = document.createElement("h2");
+            title.innerText = link["title"];
+            result.appendChild(title);
+        }
+        for (let sublink of link["links"]) {
+            result.appendChild(renderLink(sublink));
+        }
+        return result;
+    } else if (link["link"]) {
+        let result = document.createElement("p");
+        result.className = "link";
+        let a = document.createElement("a");
+        a.textContent = link["name"];
+        a.setAttribute("href", link["link"]);
+        result.appendChild(a);
+        return result;
+    }
+}
+
+let rendered = renderLink(links);
+rendered.classList.add("links-top")
+document.body.appendChild(rendered);
+
+        </script>
     </body>
 </html>
